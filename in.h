@@ -11,9 +11,11 @@
 
 class base {
 public:
+	base();
 	virtual base* copy() = 0;
-	virtual void set(std::wstring *str) = 0;
+	virtual void set(std::wstring str) = 0;
 	virtual void get() = 0;
+	virtual ~base();
 };
 class listovyi;
 class vectornyi;
@@ -26,19 +28,16 @@ public:
 	std::list<std::wstring*> l;
 	listovyi(const listovyi& obj);
 	base* copy() override;
-	void set(std::wstring *str) override;
+	void set(std::wstring str) override;
 	void get() override;
 
-	listovyi& operator=(class vectornyi& v) {
+	/*listovyi& operator=(class vectornyi& v) {
 		std::list <std::wstring*> ltemp(v.v.begin(), v.v.end());
 		l = ltemp;
 		return *this;
 	}
-	listovyi& operator=(class dequchnii& d) {
-		std::list <std::wstring*> ltemp(d.d.begin(), d.d.end());
-		l = ltemp;
-		return *this;
-	}
+	*/
+	listovyi& operator=(dequchnii& d);
 	template<typename T>
 	friend void addl(std::vector<T*>& v);
 	/*
@@ -59,19 +58,17 @@ public:
 	std::vector<std::wstring*> v;
 	vectornyi(const vectornyi& obj);
 	base* copy() override;
-	void set(std::wstring *str) override;
+	void set(std::wstring str) override;
 	void get() override;
 	
-	vectornyi& operator=(class listovyi& l) {
-		std::vector <std::wstring*> vtemp(l.l.begin(), l.l.end());
-		v = vtemp;
-		return *this;
-	}
+	vectornyi& operator=(listovyi& l);
+	/*
 	vectornyi& operator=(class dequchnii& d) {
 		std::vector <std::wstring*> vtemp(d.d.begin(), d.d.end());
 		v = vtemp;
 		return *this;
 	}
+	*/
 	template<typename T>
 	friend void addv(std::vector<T*>& v);
 	/*
@@ -92,19 +89,16 @@ public:
 	std::deque<std::wstring*> d;
 	dequchnii(const dequchnii& obj);
 	base* copy() override;
-	void set(std::wstring *str) override;
+	void set(std::wstring str) override;
 	void get() override;
 	
-	dequchnii& operator=(class listovyi& l) {
+	/*dequchnii& operator=(class listovyi& l) {
 		std::deque <std::wstring*> dtemp(l.l.begin(), l.l.end());
 		d = dtemp;
 		return *this;
-	}
-	dequchnii& operator=(class vectornyi& v) {
-		std::deque <std::wstring*> dtemp(v.v.begin(), v.v.end());
-		d = dtemp;
-		return *this;
-	}
+	}*/
+	dequchnii& operator=(vectornyi& v);
+	
 	template<typename T>
 	friend void addd(std::vector<T*>& v);
 	/*

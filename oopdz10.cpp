@@ -8,29 +8,48 @@ int main()
     {
         std::vector<base*> h1;
         std::vector<base*> h2;
-        addv(h1);
-        addl(h1);
         addd(h1);
+        addl(h1);
+        addv(h1);
         wifstream in("in.txt");
         wstring a;
-        wstring* pt;
         while (!in.eof())
         {
             getline(in, a);
-            pt = &a;
-            h1[0]->set(pt);
+            h1[0]->set(a);
         };
-        h1[1] = h1[0];
-        h1[2] = h1[1];
+        *h1[1] = *h1[0];
+        *h1[2] = *h1[1];
+        /*
+        ravno(h1[1], h1[0]);
+        ravno(h1[2], h1[1]);
+        */
         /*
         ravno(h1[1], h1[0]);
         ravno(h1[2], h1[1]);*/
-        for (int i = 0; i < h1.size(); i++) {
+        for (int i = 0; i < h1.size(); i++){
             h2.push_back(h1[i]->copy());
+         
         }
         for (int i = 0; i < h2.size(); i++) {
             h2[i]->get();
+            
         }
+        /*for (int i = 0; i < h1.size(); i++) {
+            delete h1[i];
+        }
+        h1.erase(h1.begin(), h1.end());
+        for (int i = 0; i < h2.size(); i++) {
+            delete h2[i];
+        }*/
+        
+        for (vector<base*>::iterator i = h1.begin(); i != h1.end(); i++) {
+            delete *i;
+        }
+        for (vector<base*>::iterator i = h2.begin(); i != h2.end(); i++) {
+            delete* i;
+        }
+        in.close();
     }
     _CrtDumpMemoryLeaks();
 }
