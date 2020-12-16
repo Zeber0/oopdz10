@@ -6,43 +6,31 @@ using namespace std;
 int main()
 {
     {
-        std::vector<base*> h1;
-        std::vector<base*> h2;
+        vector<base*> h1;
+        vector<base*> h2;
         addd(h1);
         addl(h1);
         addv(h1);
+        int b = 0;
         wifstream in("in.txt");
         wstring a;
         while (!in.eof())
         {
             getline(in, a);
             h1[0]->set(a);
+            b++;
         };
-        *h1[1] = *h1[0];
-        h1[2] = h1[1];
-        /*
-        ravno(h1[1], h1[0]);
-        ravno(h1[2], h1[1]);
-        */
-        /*
-        ravno(h1[1], h1[0]);
-        ravno(h1[2], h1[1]);*/
+        for (int i = 0; i < b;i++){
+            h1[1]->clone(*h1[0]);
+            h1[2]->clone(*h1[1]);
+        }
         for (int i = 0; i < h1.size(); i++){
             h2.push_back(h1[i]->copy());
-         
         }
         for (int i = 0; i < h2.size(); i++) {
-            h2[i]->get();
-            
+            h1[i]->write();
+            h2[i]->write();
         }
-        /*for (int i = 0; i < h1.size(); i++) {
-            delete h1[i];
-        }
-        h1.erase(h1.begin(), h1.end());
-        for (int i = 0; i < h2.size(); i++) {
-            delete h2[i];
-        }*/
-        
         for (vector<base*>::iterator i = h1.begin(); i != h1.end(); i++) {
             delete *i;
         }
@@ -52,6 +40,7 @@ int main()
         in.close();
     }
     _CrtDumpMemoryLeaks();
+    return 0;
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"

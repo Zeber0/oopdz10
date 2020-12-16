@@ -9,12 +9,15 @@
 
 
 
+
 class base {
 public:
 	base();
+	virtual void clone(base& dbt) = 0;
 	virtual base* copy() = 0;
+	virtual void write() = 0;
 	virtual void set(std::wstring str) = 0;
-	virtual void get() = 0;
+	virtual std::wstring get() = 0;
 	virtual ~base();
 };
 class listovyi;
@@ -23,31 +26,17 @@ class dequchnii;
 class listovyi:public base {
 protected:
 	listovyi();
-	
 public:
-	std::list<std::wstring*> l;
+	std::list<std::wstring*> db;
 	listovyi(const listovyi& obj);
 	base* copy() override;
 	void set(std::wstring str) override;
-	void get() override;
-
-	/*listovyi& operator=(class vectornyi& v) {
-		std::list <std::wstring*> ltemp(v.v.begin(), v.v.end());
-		l = ltemp;
-		return *this;
-	}
-	*/
-	listovyi& operator=(dequchnii& d);
+	std::wstring get() override;
+	void clone(base& dbt);
+	void write();
+	std::list<std::wstring*>::iterator geti();
 	template<typename T>
 	friend void addl(std::vector<T*>& v);
-	/*
-	friend void ravno(vectornyi& v, const listovyi& l);
-	friend void ravno(vectornyi& v, const dequchnii& d);
-	friend void ravno(listovyi& l, const vectornyi& v);
-	friend void ravno(listovyi& l, const dequchnii& d);
-	friend void ravno(dequchnii& d, const listovyi& l);
-	friend void ravno(dequchnii& d, const vectornyi& v);
-	*/
 	~listovyi();
 };
 class vectornyi :public base {
@@ -55,30 +44,16 @@ protected:
 	vectornyi();
 	
 public:
-	std::vector<std::wstring*> v;
+	std::vector<std::wstring*> db;
 	vectornyi(const vectornyi& obj);
 	base* copy() override;
 	void set(std::wstring str) override;
-	void get() override;
-	
-	vectornyi& operator=(listovyi& l);
-	/*
-	vectornyi& operator=(class dequchnii& d) {
-		std::vector <std::wstring*> vtemp(d.d.begin(), d.d.end());
-		v = vtemp;
-		return *this;
-	}
-	*/
+	std::wstring get() override;
+	void clone(base& dbt);
+	void write();
+	std::vector<std::wstring*>::iterator geti();
 	template<typename T>
 	friend void addv(std::vector<T*>& v);
-	/*
-	friend void ravno(vectornyi& v, const listovyi& l);
-	friend void ravno(vectornyi& v, const dequchnii& d);
-	friend void ravno(listovyi& l, const vectornyi& v);
-	friend void ravno(listovyi& l, const dequchnii& d);
-	friend void ravno(dequchnii& d, const listovyi& l);
-	friend void ravno(dequchnii& d, const vectornyi& v);
-	*/
 	~vectornyi();
 };
 class dequchnii :public base {
@@ -86,31 +61,20 @@ protected:
 	dequchnii();
 	
 public:
-	std::deque<std::wstring*> d;
+	std::deque<std::wstring*> db;
 	dequchnii(const dequchnii& obj);
 	base* copy() override;
 	void set(std::wstring str) override;
-	void get() override;
-	
-	/*dequchnii& operator=(class listovyi& l) {
-		std::deque <std::wstring*> dtemp(l.l.begin(), l.l.end());
-		d = dtemp;
-		return *this;
-	}*/
-	dequchnii& operator=(vectornyi& v);
-	
+	std::wstring get() override;
+	void clone(base& dbt);
+	void write();
+	std::deque<std::wstring*>::iterator geti();
 	template<typename T>
 	friend void addd(std::vector<T*>& v);
-	/*
-	friend void ravno(vectornyi& v, const listovyi& l);
-	friend void ravno(vectornyi& v, const dequchnii& d);
-	friend void ravno(listovyi& l, const vectornyi& v);
-	friend void ravno(listovyi& l, const dequchnii& d);
-	friend void ravno(dequchnii& d, const listovyi& l);
-	friend void ravno(dequchnii& d, const vectornyi& v);
-	*/
 	~dequchnii();
 };
+
+
 
 template<typename T>
 void addl(std::vector<T*>& v)
@@ -127,29 +91,3 @@ void addd(std::vector<T*>& v)
 {
 	v.push_back(new dequchnii);
 };
-/*
-void ravno(vectornyi& v, const listovyi& l) {
-	std::vector <std::wstring*> vtemp(l.l.begin(), l.l.end());
-	v.v = vtemp;
-}
-void ravno(vectornyi& v, const dequchnii& d) {
-	std::vector <std::wstring*> vtemp(d.d.begin(), d.d.end());
-	v.v = vtemp;
-}
-void ravno(listovyi& l, const vectornyi& v) {
-	std::list <std::wstring*> ltemp(v.v.begin(), v.v.end());
-	l.l = ltemp;
-}
-void ravno(listovyi& l, const dequchnii& d) {
-	std::list <std::wstring*> ltemp(d.d.begin(), d.d.end());
-	l.l = ltemp;
-}
-void ravno(dequchnii& d, const listovyi& l) {
-	std::deque <std::wstring*> dtemp(l.l.begin(), l.l.end());
-	d.d = dtemp;
-}
-void ravno(dequchnii& d, const vectornyi& v) {
-	std::deque <std::wstring*> dtemp(v.v.begin(), v.v.end());
-	d.d = dtemp;
-}*/
-	
